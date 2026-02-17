@@ -1,0 +1,41 @@
+# Public-facing repo: ignore everything by default
+*
+
+# Allow root files we want public
+!/.gitignore
+!/README.md
+!/meta_data.example.json
+!/HL_reddit_scrap.code-workspace
+
+# Allow code directories
+!/00_subreddit_search/
+!/00_subreddit_search/**
+!/01_subreddit_scraping/
+!/01_subreddit_scraping/**
+!/03_post_searching/
+!/03_post_searching/**
+!/04_analysis/
+!/04_analysis/**
+!/scripts/
+!/scripts/**
+
+# Explicitly ignore sensitive or large assets
+/meta_data.json
+/.venv/
+/.vscode/
+/data/
+/docs/
+/outputs/
+/poster/
+/review_app/
+
+# Common ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+.Rhistory
+.Rapp.history
+.env
+.env.*
