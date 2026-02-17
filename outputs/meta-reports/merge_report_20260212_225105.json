@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-02-12T22:51:05",
+  "posts": {
+    "posts_merged": 125,
+    "posts_added_old": 22,
+    "posts_deduped": 0,
+    "posts_total": 147,
+    "posts_new_flagged": 0,
+    "posts_reviewed": 147
+  },
+  "comments": {
+    "comments_merged": 258,
+    "comments_added_old": 0,
+    "comments_deduped": 0,
+    "comments_total": 258
+  }
+}

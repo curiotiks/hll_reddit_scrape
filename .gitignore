@@ -18,6 +18,8 @@
 !/04_analysis/**
 !/scripts/
 !/scripts/**
+!/outputs/
+!/outputs/**
 
 # Explicitly ignore sensitive or large assets
 /meta_data.json
@@ -25,15 +27,7 @@
 /.vscode/
 /data/
 /docs/
-/outputs/
-/outputs/**
-
-# Allow selected analysis outputs
-!/outputs/
-!/outputs/analysis/
-!/outputs/analysis/*.png
-!/outputs/analysis/affinity/
-!/outputs/analysis/affinity/**
+# Outputs are now included
 /poster/
 /review_app/
 
