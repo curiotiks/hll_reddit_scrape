@@ -26,6 +26,14 @@
 /data/
 /docs/
 /outputs/
+/outputs/**
+
+# Allow selected analysis outputs
+!/outputs/
+!/outputs/analysis/
+!/outputs/analysis/*.png
+!/outputs/analysis/affinity/
+!/outputs/analysis/affinity/**
 /poster/
 /review_app/
 
