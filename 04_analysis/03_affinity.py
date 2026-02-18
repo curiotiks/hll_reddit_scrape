@@ -3,8 +3,6 @@
 Affinity space analysis (Volume + Engagement).
 
 Outputs:
-  - outputs/analysis/affinity/volume_summary.md
-  - outputs/analysis/affinity/engagement_summary.md
   - outputs/analysis/affinity/affinity_summary.md
 """
 

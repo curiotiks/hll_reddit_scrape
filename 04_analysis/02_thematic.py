@@ -219,6 +219,22 @@ def main() -> None:
         i for i in data if i.get("type") == "post" and i.get("hll") is True
     ]
     direct_replies = [i for i in data if _is_direct_reply_to_op(i)]
+    chinese_language_labels = {
+        "mandarin",
+        "cantonese",
+        "hokkien",
+        "shanghainese",
+        "hakka",
+        "teochew",
+        "taiwanese",
+        "chinese",
+    }
+    chinese_hll = [
+        i
+        for i in data
+        if i.get("hll") is True
+        and str(i.get("language") or "").strip().lower() in chinese_language_labels
+    ]
 
     # Thematic analysis is driven by top-voted items (no thematic flag filter)
 
@@ -246,6 +262,7 @@ def main() -> None:
     add_items(top_comments, "top_voted_comments")
     add_items(ehll_posts, "ehll_posts")
     add_items(direct_replies, "direct_replies_to_op")
+    add_items(chinese_hll, "hll_chinese_languages")
 
     # De-duplicate by (subset, id)
     seen = set()
@@ -331,6 +348,7 @@ def main() -> None:
         "hll": [i for i in data if i.get("hll") is True],
         "non_hll": [i for i in data if i.get("non_hll") is True],
         "adoptee": [i for i in data if i.get("adoptee") is True],
+        "hll_chinese": chinese_hll,
     }
 
     stopwords_file = project_root / "04_analysis" / "stop_words.txt"
@@ -338,13 +356,13 @@ def main() -> None:
     extended_stop_words = set(stopwords.words("english")).union(additional_stopwords)
     lemmatizer = WordNetLemmatizer()
 
-    def build_weighted_texts(items: list[dict]) -> list[str]:
+    def build_weighted_texts(items: list[dict], use_weights: bool = True) -> list[str]:
         texts = []
         for item in items:
             text = _item_text(item)
             if not text:
                 continue
-            if item.get("type") == "post":
+            if use_weights and item.get("type") == "post":
                 texts.extend([text] * post_weight)
             else:
                 texts.append(text)
@@ -353,7 +371,7 @@ def main() -> None:
     lda_results = {}
     for name, items in cohorts.items():
         lda_start = time.time()
-        top_texts = build_weighted_texts(items)
+        top_texts = build_weighted_texts(items, use_weights=True)
         processed_texts = [
             _preprocess(text, extended_stop_words, lemmatizer) for text in top_texts if text
         ]
@@ -481,10 +499,12 @@ def main() -> None:
             return umap_model, hdbscan_model
 
         for name, items in cohorts.items():
-            bertopic_docs = build_weighted_texts(items)
+            bertopic_docs = build_weighted_texts(items, use_weights=False)
             if not bertopic_docs:
                 bertopic_results[name] = {"skipped": "No documents", "topics_csv": None}
                 continue
+            # Deduplicate exact texts to avoid repeated exemplar passages
+            bertopic_docs = list(dict.fromkeys(bertopic_docs))
 
             # Drop short docs for BERTopic to reduce noise
             bertopic_docs = [d for d in bertopic_docs if len(d.split()) >= 50]

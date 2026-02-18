@@ -1,59 +1,35 @@
-# Heritage Language Learning on Reddit (Public Repo)
+# Analysis of Reddit Discussions: Chinese Heritage Language Learning
 
-This public repository contains the **code and analysis pipeline** for a study of heritage‑language learning discussions on Reddit. **Data, outputs, review tools, and posters are excluded** to protect participants and keep the repo lightweight.
+**Wenting Song** and **Curt "The Forgotten" Fulwider** (EPLS)
 
-## Study Overview
-- **Goal:** Examine volume, engagement, and content of heritage‑language (HLL) discussions across language‑learning subreddits.
-- **Approach:** Inclusive keyword search of recent posts, manual labeling of HLL status, and analysis of response patterns and topic themes.
-- **Framework:** Affinity Space lens (volume + engagement), plus thematic/BERTopic content analysis.
+## Poster Summary
+We used an inclusive keyword search (OR logic) to identify heritage‑language–relevant discussions in selected language‑learning subreddits, scraping the newest 100 posts per subreddit via the Reddit API and collecting linked comments/replies and metadata. Posts were manually labeled for inclusion, HLL status, and language in a reviewer app; labels were propagated to associated comments/replies, and non‑relevant items were excluded from analysis. The poster focuses on Chinese‑related HLL content only (Mandarin + related varieties), with a final dataset of **n = 71**.
 
-## Data Collection (High‑Level)
-1. Scrape the newest 100 posts per subreddit.
-1. Keep posts whose title or self‑text match **any** keyword (inclusive OR).
-1. Manually label posts (HLL vs Non‑HLL, language, relevance).
-1. Scrape all comments/replies for included posts and run sentiment + topic analysis.
+We conducted manual thematic analysis on the included posts, comments, and replies to generate the theme categories and percentages reported. Volume and engagement are summarized by subreddit for matched HLL posts, reflecting relative visibility and participation across the sampled subreddits.
 
-## Key Results (Summary)
-- HLL‑relevant posts are a **small share** of scraped posts, but generate **sustained engagement** (thread length and comment volume).
-- Response rates are **consistently high** across subreddits, so engagement intensity is best reflected in **thread length and word‑count medians**.
-- Topic modeling and thematic analysis surface **recurring motivations, identity tension, and learning barriers**.
+## Methods (Process Overview)
+1. **Search & scrape:** Inclusive keyword search (OR logic) across selected language‑learning subreddits; scrape newest 100 posts per subreddit and collect all linked comments/replies plus metadata.
+1. **Screening & labeling:** Manually review posts for inclusion, HLL status, and language in a reviewer app.
+1. **Propagation:** Apply post labels to associated comments/replies; remove non‑relevant items from analysis.
+1. **Thematic analysis:** Code the included Chinese‑related HLL content to derive theme categories and percentages.
 
-## Public Repository Contents
-- `00_subreddit_search/`, `03_post_searching/`: keyword and post discovery logic
-- `01_subreddit_scraping/`: comment/reply scraping and sentiment analysis
+## Results (Poster Tables)
+- **Volume and Engagement by Subreddit (HLL‑Matched Posts Only):** `outputs/analysis/affinity/apa_tables/table1_volume_engagement_apa7.pdf`
+- **Themes and Percent of Posts:** `outputs/analysis/affinity/apa_tables/themes_apa7.pdf`
+
+## Repository Contents
+- `00_subreddit_search/`, `03_post_searching/`: keyword discovery and post sampling
+- `01_subreddit_scraping/`: comment/reply scraping and sentiment utilities
 - `04_analysis/`: analysis scripts (inventory, crafting, affinity, thematic)
-- `scripts/`: utilities for merging and conversion
+- `scripts/`: utilities for merging, exporting, and regeneration
+- `outputs/analysis/affinity/`: aggregate tables (APA‑ready)
+- `outputs/analysis/*.png`: aggregate figures used in the poster
 - `meta_data.example.json`: template for local credentials and settings
 
-## Local Setup (For Reproduction)
+## Reproduction (Local)
 1. Copy `meta_data.example.json` → `meta_data.json` and add your Reddit API credentials.
-1. Install dependencies in a local virtual environment.
-1. Run the scripts in `03_post_searching/`, `01_subreddit_scraping/`, and `04_analysis/` as needed.
+1. Run `03_post_searching/` and `01_subreddit_scraping/` to rebuild data.
+1. Use analysis scripts in `04_analysis/` to regenerate tables/figures.
 
-## Q/A (Conference‑Style)
-**Q: What is the sampling frame?**  
-A: We scrape the newest 100 posts per subreddit and retain posts that match at least one keyword. This prioritizes recent, relevant discussions.
-
-**Q: Does this represent all subreddit activity?**  
-A: No. It is a matched‑post sample, not the full subreddit population. We report this as a limitation.
-
-**Q: How is HLL defined?**  
-A: HLL status is manually labeled based on self‑identification or clear contextual cues in posts/comments.
-
-**Q: How do you handle ethics and privacy?**  
-A: Only public posts are collected; no raw data is released in this public repo; sensitive data is excluded.
-
-**Q: What about bots or deleted users?**  
-A: Deleted authors remain in metadata as `[deleted]`. Content is included only if available at scrape time.
-
-**Q: Why not include the review UI and data?**  
-A: The public repo focuses on code and methods. The review UI and labeled data are restricted due to privacy and IRB considerations.
-
-**Q: How reproducible are the results?**  
-A: The pipeline is reproducible given access to the same subreddit snapshot and credentials. Results may shift over time due to Reddit content changes.
-
-**Q: Why use BERTopic and thematic analysis together?**  
-A: BERTopic provides topic structure; thematic analysis interprets and consolidates those patterns into human‑meaningful themes.
-
-**Q: What are the main limitations?**  
-A: Reddit users are not representative of all HLLs; the sample is time‑bounded and keyword‑filtered; moderation and deletion can affect visibility.
+## Ethics & Privacy
+This public repo **excludes raw data and text excerpts** to prevent searchable usernames or post content. Only aggregate outputs (tables/figures) are included for the poster framework.

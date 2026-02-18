@@ -18,8 +18,17 @@
 !/04_analysis/**
 !/scripts/
 !/scripts/**
+# Outputs: ignore by default, allow only aggregate tables/figures
+/outputs/
+/outputs/**
 !/outputs/
-!/outputs/**
+!/outputs/analysis/
+!/outputs/analysis/affinity/
+!/outputs/analysis/affinity/affinity_summary.md
+!/outputs/analysis/affinity/apa_tables/
+!/outputs/analysis/affinity/apa_tables/**
+!/outputs/analysis/*.png
+!/outputs/analysis/*summary.md
 
 # Explicitly ignore sensitive or large assets
 /meta_data.json
@@ -27,9 +36,23 @@
 /.vscode/
 /data/
 /docs/
-# Outputs are now included
 /poster/
 /review_app/
+
+# Raw/derived outputs to keep local only
+/outputs/analysis/topics/
+/outputs/analysis/topics/**
+/outputs/analysis/chinese_language_subset.csv
+/outputs/meta-reports/
+/outputs/meta-reports/**
+/outputs/chinese_language_subset.numbers/
+/outputs/chinese_language_subset.numbers/**
+
+# Ignore LaTeX build artifacts in APA tables
+/outputs/analysis/affinity/apa_tables/*.aux
+/outputs/analysis/affinity/apa_tables/*.log
+/outputs/analysis/affinity/apa_tables/*.fls
+/outputs/analysis/affinity/apa_tables/*.fdb_latexmk
 
 # Common ignores
 __pycache__/
